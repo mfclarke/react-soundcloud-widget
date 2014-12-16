@@ -6,10 +6,10 @@
 var React = require('react');
 var SoundCloud = require('../');
 
-var url = 'https://soundcloud.com/hucci/hucci-cashmere';
-var url2 = 'https://soundcloud.com/hucci/g-frsh-panic-cord-prod-hucci';
+var url = 'https://soundcloud.com/sylvanesso/coffee';
+var url2 = 'https://soundcloud.com/diplo/ty-dolla-ign-stand-for-prod-diplo';
 
-var Example = React.createClass({displayName: 'Example',
+var Example = React.createClass({
   getInitialState: function() {
     return {
       url: url
@@ -19,14 +19,6 @@ var Example = React.createClass({displayName: 'Example',
   _changeUrl: function() {
     var newUrl = this.state.url === url ? url2 : url;
     this.setState({url: newUrl});
-  },
-
-  _onPlayerReady: function() {
-    console.log('PLAYER READY');
-  },
-
-  _onVideoReady: function() {
-    console.log('VIDEO READY');
   },
 
   _onPlay: function() {
@@ -42,17 +34,17 @@ var Example = React.createClass({displayName: 'Example',
   },
 
   render: function() {
-    var visualOpts = {
-      visual: true
-    };
-
     return (
       React.createElement("div", {className: "example"}, 
-        React.createElement(SoundCloud, {url: this.state.url, 
-                    opts: visualOpts, 
-                    onPlay: this._onPlay, 
-                    onPause: this._onPause, 
-                    onEnd: this._onEnd}), 
+        React.createElement(SoundCloud, {
+          url: this.state.url, 
+          onPlay: this._onPlay, 
+          onPause: this._onPause, 
+          onEnd: this._onEnd,
+          opts: {
+            visual: true
+          }
+        }), 
 
         React.createElement("div", {className: "changeUrl"}, 
           React.createElement("button", {onClick: this._changeUrl}, "Change url")
@@ -67,6 +59,7 @@ var Example = React.createClass({displayName: 'Example',
  */
 
 React.render(React.createElement(Example, null), document.querySelector('section.content'));
+
 },{"../":2,"react":152}],2:[function(require,module,exports){
 /**
  * Module dependencies
@@ -84,7 +77,7 @@ var DEFAULT_OPTIONS = require('./lib/default-options');
  * HTML5 widget from SoundCloud. Programmatic control not included.
  */
 
-var SoundCloud = React.createClass({displayName: 'SoundCloud',
+var SoundCloud = React.createClass({
   propTypes: {
 
     // url to play. It's kept in sync, changing it will
@@ -146,13 +139,14 @@ var SoundCloud = React.createClass({displayName: 'SoundCloud',
 
   render: function() {
     return (
-      React.createElement("iframe", {id: this.props.id, 
-              width: "100%", 
-              height: this.props.opts.visual ? '450' : '166', 
-              scrolling: "no", 
-              frameBorder: "no", 
-              src: "https://w.soundcloud.com/player/?url="}
-      )
+      React.createElement("iframe", {
+        id: this.props.id, 
+        width: "100%", 
+        height: this.props.opts.visual ? '450' : '166', 
+        scrolling: "no", 
+        frameBorder: "no", 
+        src: "https://w.soundcloud.com/player/?url="
+      })
     );
   },
 

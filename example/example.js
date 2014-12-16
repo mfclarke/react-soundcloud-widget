@@ -5,8 +5,8 @@
 var React = require('react');
 var SoundCloud = require('../');
 
-var url = 'https://soundcloud.com/hucci/hucci-cashmere';
-var url2 = 'https://soundcloud.com/hucci/g-frsh-panic-cord-prod-hucci';
+var url = 'https://soundcloud.com/sylvanesso/coffee';
+var url2 = 'https://soundcloud.com/diplo/ty-dolla-ign-stand-for-prod-diplo';
 
 var Example = React.createClass({
   getInitialState: function() {
@@ -18,14 +18,6 @@ var Example = React.createClass({
   _changeUrl: function() {
     var newUrl = this.state.url === url ? url2 : url;
     this.setState({url: newUrl});
-  },
-
-  _onPlayerReady: function() {
-    console.log('PLAYER READY');
-  },
-
-  _onVideoReady: function() {
-    console.log('VIDEO READY');
   },
 
   _onPlay: function() {
@@ -41,22 +33,22 @@ var Example = React.createClass({
   },
 
   render: function() {
-    var visualOpts = {
-      visual: true
-    };
-
     return (
-      <div className='example'>
-        <SoundCloud url={this.state.url} 
-                    opts={visualOpts}
-                    onPlay={this._onPlay} 
-                    onPause={this._onPause}
-                    onEnd={this._onEnd} />
+      React.createElement("div", {className: "example"}, 
+        React.createElement(SoundCloud, {
+          url: this.state.url, 
+          onPlay: this._onPlay, 
+          onPause: this._onPause, 
+          onEnd: this._onEnd,
+          opts: {
+            visual: true
+          }
+        }), 
 
-        <div className='changeUrl'>
-          <button onClick={this._changeUrl}>Change url</button>
-        </div>
-      </div>
+        React.createElement("div", {className: "changeUrl"}, 
+          React.createElement("button", {onClick: this._changeUrl}, "Change url")
+        )
+      )
     );
   }
 });
@@ -65,4 +57,4 @@ var Example = React.createClass({
  * Render Example
  */
 
-React.render(<Example />, document.querySelector('section.content'));
+React.render(React.createElement(Example, null), document.querySelector('section.content'));
