@@ -27,6 +27,12 @@ var SoundCloud = React.createClass({
     // widget parameters for appearance and auto play.
     opts: React.PropTypes.objectOf(React.PropTypes.bool),
 
+    // width override
+    width: React.PropTypes.string,
+
+    // height override
+    height: React.PropTypes.string,
+
     // event subscriptions
     onPlay: React.PropTypes.func,
     onPause: React.PropTypes.func,
@@ -37,6 +43,8 @@ var SoundCloud = React.createClass({
     return {
       id: 'react-sc-widget',
       opts: DEFAULT_OPTIONS,
+      width: null,
+      height: null,
       onPlay: noop,
       onPause: noop,
       onEnd: noop
@@ -63,7 +71,7 @@ var SoundCloud = React.createClass({
    *
    * @param {Object} nextProps
    */
-  
+
   componentWillUpdate: function(nextProps) {
     if (nextProps.url !== this.props.url) {
       this._loadUrl(nextProps.url, nextProps.opts);
@@ -77,11 +85,11 @@ var SoundCloud = React.createClass({
   render: function() {
     return (
       React.createElement("iframe", {
-        id: this.props.id, 
-        width: "100%", 
-        height: this.props.opts.visual ? '450' : '166', 
-        scrolling: "no", 
-        frameBorder: "no", 
+        id: this.props.id,
+        width: this.props.width ? this.props.width : "100%",
+        height: this.props.height ? this.props.height : (this.props.opts.visual ? '450' : '166'),
+        scrolling: "no",
+        frameBorder: "no",
         src: "https://w.soundcloud.com/player/?url="
       })
     );
